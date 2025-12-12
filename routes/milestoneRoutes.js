@@ -1,3 +1,5 @@
+//milestoneRoutes.js
+
 const express = require("express");
 const app = express.Router();
 const { authRequired, authorize } = require("../middleware/auth");
@@ -16,9 +18,9 @@ app.get(
   async (req, res) => {
     const { owner, repo } = req.query;
     if (!owner || !repo) return res.status(400).send("Falta owner ou repo");
-
+    const userToken = req.session.token; // A forma de obter o token pode variar
     try {
-      const milestones = await getMilestones(owner, repo);
+      const milestones = await getMilestones(owner, repo, userToken);
       if (milestones.length === 0)
         return res.sendFile("noMilestones.html", { root: "views" });
 
@@ -798,5 +800,7 @@ app.get(
     }
   }
 );
+
+
 
 module.exports = app;

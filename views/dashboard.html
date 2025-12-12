@@ -1,3 +1,4 @@
+<!-- dashboard.html -->
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -30,7 +31,7 @@
             position: absolute;
             width: 200%;
             height: 200%;
-            background-image: 
+            background-image:
                 radial-gradient(circle at 20% 30%, rgba(88, 166, 255, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 40% 80%, rgba(34, 197, 94, 0.1) 0%, transparent 50%);
@@ -38,12 +39,16 @@
         }
 
         @keyframes floatParticles {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translate(0, 0) rotate(0deg);
             }
+
             33% {
                 transform: translate(30px, -30px) rotate(120deg);
             }
+
             66% {
                 transform: translate(-20px, 20px) rotate(240deg);
             }
@@ -54,12 +59,13 @@
             backdrop-filter: blur(20px);
             padding: 48px;
             border-radius: 24px;
-            box-shadow: 
+            box-shadow:
                 0 20px 60px rgba(0, 0, 0, 0.5),
                 0 0 0 1px rgba(139, 92, 246, 0.2),
                 inset 0 0 0 1px rgba(255, 255, 255, 0.05);
             max-width: 580px;
             width: 100%;
+            overflow: visible; /* permite que o botão apareça */
             text-align: center;
             position: relative;
             animation: containerFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -71,6 +77,7 @@
                 opacity: 0;
                 transform: translateY(30px) scale(0.95);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0) scale(1);
@@ -85,12 +92,12 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, 
-                #58a6ff 0%, 
-                #8b5cf6 25%, 
-                #22c55e 50%, 
-                #8b5cf6 75%, 
-                #58a6ff 100%);
+            background: linear-gradient(90deg,
+                    #58a6ff 0%,
+                    #8b5cf6 25%,
+                    #22c55e 50%,
+                    #8b5cf6 75%,
+                    #58a6ff 100%);
             background-size: 200% 100%;
             animation: gradientShift 3s linear infinite;
             border-radius: 24px 24px 0 0;
@@ -100,6 +107,7 @@
             0% {
                 background-position: 0% 50%;
             }
+
             100% {
                 background-position: 200% 50%;
             }
@@ -129,10 +137,13 @@
         }
 
         @keyframes logoPulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: scale(1);
                 box-shadow: 0 10px 30px rgba(88, 166, 255, 0.3);
             }
+
             50% {
                 transform: scale(1.05);
                 box-shadow: 0 15px 40px rgba(88, 166, 255, 0.5);
@@ -153,9 +164,12 @@
         }
 
         @keyframes titleGlow {
-            0%, 100% {
+
+            0%,
+            100% {
                 filter: brightness(1);
             }
+
             50% {
                 filter: brightness(1.2);
             }
@@ -174,6 +188,7 @@
                 opacity: 0;
                 transform: translateY(10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -211,6 +226,7 @@
                 opacity: 0;
                 transform: translateX(-30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -262,6 +278,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -292,9 +309,12 @@
         }
 
         @keyframes roleBadgePulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: scale(1);
             }
+
             50% {
                 transform: scale(1.05);
             }
@@ -351,7 +371,7 @@
 
         button {
             padding: 14px 28px;
-            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            background: linear-gradient(135deg, #58a6ff 0%, #8b5cf6 100%);
             color: white;
             border: none;
             border-radius: 12px;
@@ -403,9 +423,9 @@
             font-weight: 700;
             font-size: 16px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-top: 24px;
             animation: logoutSlideIn 0.6s ease-out 0.5s backwards;
             position: relative;
+            z-index: 10; /* força aparecer acima de outros elementos */
             overflow: hidden;
         }
 
@@ -414,6 +434,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -464,7 +485,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* Responsividade */
@@ -522,19 +545,34 @@
 <body>
     <div class="container">
         <div class="logo"></div>
-        
+
         <h1>Dashboard</h1>
         <p class="subtitle">Bem-vindo ao GitTasks</p>
 
         <div class="nav-links">
             <a href="/milestones" class="nav-link">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
                 Consultar Milestones
             </a>
         </div>
+        <div class="nav-links">
+            <a href="/repo.html" class="nav-link">
+                <svg class="feature-icon github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                    <path
+                        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+                </svg>
+                Consultar Repositórios Privados
+            </a>
+        </div>
+        <div id="github-section" style="display:none;">
+            <h2>GitHub</h2>
+            <button id="btnRepos" style="display:none;">Ver Repositórios</button>
+        </div>
+
 
         <div class="role-section">
             <div class="role-label">O seu papel atual</div>
@@ -551,12 +589,17 @@
                     <button onclick="changeRole()">
                         <span>Alterar</span>
                     </button>
+                    <button id="github-login" style="display:none;">
+                        <span>
+                            Autenticar no GitHub
+                        </span>
+                    </button>
                 </div>
             </div>
         </div>
-
         <a href="/logout" class="logout-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <polyline points="16 17 21 12 16 7"></polyline>
                 <line x1="21" y1="12" x2="9" y2="12"></line>
@@ -566,6 +609,17 @@
     </div>
 
     <script>
+        // Mostrar o botão do GitHub apenas se o utilizador já estiver autenticado no Google
+        // Verifique se o token do Google está presente no cookie do navegador
+        if (document.cookie.includes("googleAuthToken")) {
+            // Exibir o botão de login do GitHub
+            document.getElementById("github-login").style.display = "block";
+        }
+
+        document.getElementById("github-login").addEventListener("click", function () {
+            window.location.href = "/auth/github";
+        });
+
         // Busca a sessão do utilizador ao carregar a página
         async function loadSession() {
             const res = await fetch("/get-session");
@@ -583,23 +637,23 @@
             const newRole = document.getElementById("role-select").value;
             const button = event.target;
             const originalContent = button.innerHTML;
-            
+
             // Adicionar loading
             button.innerHTML = '<div class="loading"></div>';
             button.disabled = true;
-            
+
             try {
                 const res = await fetch("/change-role", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ role: newRole })
                 });
-                
+
                 if (res.status === 401) {
                     alert("Não autenticado! Atualiza a página.");
                     return;
                 }
-                
+
                 const data = await res.json();
                 alert(data.message);
                 document.getElementById("user-role").textContent = data.role;
@@ -631,11 +685,76 @@
                 }
             });
         }
+        async function fetchRepos() {
+            const res = await fetch("/github/repos");
+            if (!res.ok) {
+                alert("Não autorizado ou erro ao buscar repositórios");
+                return;
+            }
+            const repos = await res.json();
+            const ul = document.getElementById("repos-list");
+            ul.innerHTML = "";
+            repos.forEach(r => {
+                const li = document.createElement("li");
+                li.innerHTML = `<a href="${r.html_url}" target="_blank">${r.name}</a>`;
+                ul.appendChild(li);
+            });
+        }
+
+        // Mostrar seção do GitHub se o usuário estiver autenticado com GitHub
+        async function showGitHubSection() {
+            const res = await fetch("/get-session");
+            if (!res.ok) return;
+            const user = await res.json();
+            if (user.githubToken) {
+                document.getElementById("github-section").style.display = "block";
+            }
+        } async function mostrarBtnRep() {
+            document.addEventListener("DOMContentLoaded", async () => {
+                const res = await fetch("/get-session");
+                if (!res.ok) {
+                    window.location.href = "/";
+                    return;
+                }
+                const user = await res.json();
+
+                // Atualiza role
+                document.getElementById("user-role").textContent = user.role;
+                document.getElementById("role-select").value = user.role;
+
+                // Mostrar botão GitHub apenas se logado no Google
+                if (user.email) {
+                    document.getElementById("github-login").style.display = "inline-block";
+                }
+
+                // Mostrar seção e botão Repositórios apenas se já autenticou GitHub
+                // Mostrar seção do GitHub se o usuário tiver cookie do GitHub
+                if (document.cookie.includes("githubAuthTokenPublic")) {
+                    document.getElementById("github-section").style.display = "block";
+                    document.getElementById("btnRepos").style.display = "inline-block";
+                }
+
+            });
+
+            document.getElementById("github-login").addEventListener("click", () => {
+                window.location.href = "/auth/github";
+            });
+
+            document.getElementById("btnRepos").addEventListener("click", () => {
+                window.location.href = "/repo.html";
+            });
+        }
+
 
         // Inicialização
+
+        fetchSession();
+        fetchUsuarios();
+        showGitHubSection();
         loadSession();
         ShowRoleHTML();
         HideBotoesFreeHTML();
+        mostrarBtnRep();
     </script>
 </body>
 

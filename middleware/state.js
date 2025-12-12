@@ -1,6 +1,6 @@
 //METODO PARA A CRIACAO DO STATE DE FORMA ALEATORIA
 
-
+// state.js
 
 const crypto = require("crypto");
 
