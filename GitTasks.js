@@ -64,30 +64,6 @@ app.use(
   );
 })();
 
-
-// // Endpoint para buscar repositórios
-// app.get("/repos", async (req, res) => {
-//   if (!req.user) {
-//     return res.redirect('/login');  // Se o usuário não estiver autenticado, redireciona para login
-//   }
-
-//   try {
-//     // Chama a API do GitHub para obter os repositórios do usuário
-//     const response = await axios.get('https://api.github.com/user/repos', {
-//       headers: {
-//         Authorization: `Bearer ${req.user.githubToken}`  // O token do GitHub que foi salvo na autenticação
-//       }
-//     });
-
-//     const repos = response.data;  // Repositórios retornados da API do GitHub
-
-//     // Renderiza a página repo.html e passa os repositórios como variável
-//     res.render("repo", { repos });
-//   } catch (error) {
-//     console.error('Erro ao buscar repositórios:', error);
-//     res.status(500).send('Erro ao buscar repositórios.');
-//   }
-// });
 app.get("/repos", (req, res) => {
   if (!req.session?.githubAccessToken) {
     return res.status(403).send("Necessário autenticar com GitHub");

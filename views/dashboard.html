@@ -65,7 +65,8 @@
                 inset 0 0 0 1px rgba(255, 255, 255, 0.05);
             max-width: 580px;
             width: 100%;
-            overflow: visible; /* permite que o botão apareça */
+            overflow: visible;
+            /* permite que o botão apareça */
             text-align: center;
             position: relative;
             animation: containerFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -425,7 +426,8 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             animation: logoutSlideIn 0.6s ease-out 0.5s backwards;
             position: relative;
-            z-index: 10; /* força aparecer acima de outros elementos */
+            z-index: 10;
+            /* força aparecer acima de outros elementos */
             overflow: hidden;
         }
 
@@ -609,153 +611,67 @@
     </div>
 
     <script>
-        // Mostrar o botão do GitHub apenas se o utilizador já estiver autenticado no Google
-        // Verifique se o token do Google está presente no cookie do navegador
-        if (document.cookie.includes("googleAuthToken")) {
-            // Exibir o botão de login do GitHub
-            document.getElementById("github-login").style.display = "block";
-        }
-
-        document.getElementById("github-login").addEventListener("click", function () {
-            window.location.href = "/auth/github";
-        });
-
-        // Busca a sessão do utilizador ao carregar a página
-        async function loadSession() {
+        document.addEventListener("DOMContentLoaded", async () => {
+            // Busca a sessão do utilizador
             const res = await fetch("/get-session");
-            if (res.status === 401) {
+            if (!res.ok) {
                 alert("Não autenticado! Serás redirecionado para login.");
                 window.location.href = "/";
                 return;
             }
-            const data = await res.json();
-            document.getElementById("user-role").textContent = data.role;
-            document.getElementById("role-select").value = data.role;
-        }
-
-        async function changeRole() {
-            const newRole = document.getElementById("role-select").value;
-            const button = event.target;
-            const originalContent = button.innerHTML;
-
-            // Adicionar loading
-            button.innerHTML = '<div class="loading"></div>';
-            button.disabled = true;
-
-            try {
-                const res = await fetch("/change-role", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ role: newRole })
-                });
-
-                if (res.status === 401) {
-                    alert("Não autenticado! Atualiza a página.");
-                    return;
-                }
-
-                const data = await res.json();
-                alert(data.message);
-                document.getElementById("user-role").textContent = data.role;
-            } catch (error) {
-                alert("Erro ao alterar papel. Por favor, tente novamente.");
-            } finally {
-                button.innerHTML = originalContent;
-                button.disabled = false;
-            }
-        }
-
-        async function ShowRoleHTML() {
-            fetch("/get-role")
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById("user-role").textContent = data.role;
-                });
-        }
-
-        async function HideBotoesFreeHTML() {
-            document.addEventListener("DOMContentLoaded", async () => {
-                const userRole = await getUserRole();
-                document.getElementById("user-role").textContent = userRole;
-
-                if (userRole === "free") {
-                    document.querySelectorAll(".create-task-btn").forEach((btn) => {
-                        btn.style.display = "none";
-                    });
-                }
-            });
-        }
-        async function fetchRepos() {
-            const res = await fetch("/github/repos");
-            if (!res.ok) {
-                alert("Não autorizado ou erro ao buscar repositórios");
-                return;
-            }
-            const repos = await res.json();
-            const ul = document.getElementById("repos-list");
-            ul.innerHTML = "";
-            repos.forEach(r => {
-                const li = document.createElement("li");
-                li.innerHTML = `<a href="${r.html_url}" target="_blank">${r.name}</a>`;
-                ul.appendChild(li);
-            });
-        }
-
-        // Mostrar seção do GitHub se o usuário estiver autenticado com GitHub
-        async function showGitHubSection() {
-            const res = await fetch("/get-session");
-            if (!res.ok) return;
             const user = await res.json();
-            if (user.githubToken) {
-                document.getElementById("github-section").style.display = "block";
+
+            // Atualiza role
+            const roleElement = document.getElementById("user-role");
+            const roleSelect = document.getElementById("role-select");
+            roleElement.textContent = user.role || "free"; // fallback
+            roleSelect.value = user.role || "free";
+
+if (user.email) {
+    const githubBtn = document.getElementById("github-login");
+    githubBtn.style.display = "inline-block";
+    
+    githubBtn.addEventListener("click", () => {
+        window.location.href = "/auth/github";
+    });
+}
+
+
+            // Ocultar botões de criação de tasks se role = free
+            if (user.role === "free") {
+                document.querySelectorAll(".create-task-btn").forEach(btn => {
+                    btn.style.display = "none";
+                });
             }
-        } async function mostrarBtnRep() {
-            document.addEventListener("DOMContentLoaded", async () => {
-                const res = await fetch("/get-session");
-                if (!res.ok) {
-                    window.location.href = "/";
-                    return;
+
+            // Listener para alterar role
+            document.querySelector("button[onclick='changeRole()']").addEventListener("click", async (event) => {
+                const newRole = roleSelect.value;
+                const button = event.currentTarget;
+                const originalContent = button.innerHTML;
+
+                button.innerHTML = '<div class="loading"></div>';
+                button.disabled = true;
+
+                try {
+                    const res = await fetch("/change-role", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ role: newRole })
+                    });
+                    const data = await res.json();
+                    roleElement.textContent = data.role;
+                    alert(data.message);
+                } catch (err) {
+                    alert("Erro ao alterar papel.");
+                } finally {
+                    button.innerHTML = originalContent;
+                    button.disabled = false;
                 }
-                const user = await res.json();
-
-                // Atualiza role
-                document.getElementById("user-role").textContent = user.role;
-                document.getElementById("role-select").value = user.role;
-
-                // Mostrar botão GitHub apenas se logado no Google
-                if (user.email) {
-                    document.getElementById("github-login").style.display = "inline-block";
-                }
-
-                // Mostrar seção e botão Repositórios apenas se já autenticou GitHub
-                // Mostrar seção do GitHub se o usuário tiver cookie do GitHub
-                if (document.cookie.includes("githubAuthTokenPublic")) {
-                    document.getElementById("github-section").style.display = "block";
-                    document.getElementById("btnRepos").style.display = "inline-block";
-                }
-
             });
-
-            document.getElementById("github-login").addEventListener("click", () => {
-                window.location.href = "/auth/github";
-            });
-
-            document.getElementById("btnRepos").addEventListener("click", () => {
-                window.location.href = "/repo.html";
-            });
-        }
-
-
-        // Inicialização
-
-        fetchSession();
-        fetchUsuarios();
-        showGitHubSection();
-        loadSession();
-        ShowRoleHTML();
-        HideBotoesFreeHTML();
-        mostrarBtnRep();
+        });
     </script>
+
 </body>
 
 </html>

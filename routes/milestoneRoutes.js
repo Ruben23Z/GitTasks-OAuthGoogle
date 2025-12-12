@@ -17,8 +17,11 @@ app.get(
   authorize("read", "milestones"),
   async (req, res) => {
     const { owner, repo } = req.query;
+    const userToken =
+      req.session.githubAccessToken || req.session.user?.githubToken;
+
     if (!owner || !repo) return res.status(400).send("Falta owner ou repo");
-    const userToken = req.session.token; // A forma de obter o token pode variar
+
     try {
       const milestones = await getMilestones(owner, repo, userToken);
       if (milestones.length === 0)
@@ -800,7 +803,5 @@ app.get(
     }
   }
 );
-
-
 
 module.exports = app;

@@ -181,6 +181,9 @@ app.get("/get-session", (req, res) => {
     githubAuthorized: !!req.session.githubAccessToken, // true se já autorizou
   });
 });
+
+
+
 app.get("/get-role", (req, res) => {
   if (!req.session?.user)
     return res.status(401).json({ error: "Não autenticado" });
