@@ -1,0 +1,16 @@
+p, free, milestones, read
+
+p, regular, milestones, read
+p, regular, tasks, write
+
+p, premium, milestones, read
+p, premium, tasks, write  # premium pode criar task
+p, premium, taskslist, write   # premium pode escolher nome da lista
+
+g, regular, free
+g, premium, regular
+
+
+g, rubenclaude23@gmail.com, free
+g, rubenzhang200511@gmail.com, regular
+g, rubenzhang200523@gmail.com, premium
